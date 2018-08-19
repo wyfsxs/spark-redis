@@ -24,6 +24,8 @@ object Demo1 {
     val schemaStr = "a,b,c"
     val schema = StructType(schemaStr.split(",").map(fieldName => StructField(fieldName, StringType, true)))
     val redisRdd = keysRdd.getKV()
+    val tuple = redisRdd.count()
+    println(tuple)
     print(redisRdd)
     val hiveContext = new HiveContext(sc) //创建SQLContext
     val rowRdd = redisRdd.map(msg => Row(msg._2.split(",")(0), msg._2.split(",")(1), msg._2.split(",")(2)))
